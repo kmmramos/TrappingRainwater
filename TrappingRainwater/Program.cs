@@ -29,36 +29,70 @@
             }
         }
 
-        //NORMAL SOLUTION
-        public static int GetTrappedRainwater(int[] heights)
+        //OPTIMAL SOLUTION
+        public static int GetTrappedRainwater(int[] height)
         {
-            int totalWater = 0;
-            for (int p = 0; p < heights.Length; p++)
+            int left = 0, right = height.Length - 1, leftMax = 0, rightMax = 0, total = 0;
+            while (left < right)
             {
-                int leftP = p, rightP = p, maxLeft = 0, maxRight = 0;
-
-                //determine maxLeft
-                while (leftP >= 0)
+                if (height[left] <= height[right])
                 {
-                    maxLeft = Math.Max(maxLeft, heights[leftP]);
-                    leftP--;
+                    if (height[left] >= leftMax)
+                    {
+                        leftMax = height[left];
+                    }
+                    else
+                    {
+                        total += leftMax - height[left]; ;
+                    }
+                    left++;
                 }
-
-                //determine maxRight
-                while (rightP < heights.Length)
+                else
                 {
-                    maxRight = Math.Max(maxRight, heights[rightP]);
-                    rightP++;
-                }
-
-                int currentWater = Math.Min(maxLeft, maxRight) - heights[p];
-                if (currentWater >= 0)
-                {
-                    totalWater += currentWater;
-                }
+                    if (height[right] >= rightMax)
+                    {
+                        rightMax = height[right];
+                    }
+                    else
+                    {
+                        total += rightMax - height[right];
+                    }
+                    right--;
+                }                
             }
-            return totalWater;
+            return total;
         }
+
+        //NORMAL SOLUTION
+        //public static int GetTrappedRainwater(int[] heights)
+        //{
+        //    int totalWater = 0;
+        //    for (int p = 0; p < heights.Length; p++)
+        //    {
+        //        int leftP = p, rightP = p, maxLeft = 0, maxRight = 0;
+
+        //        //determine maxLeft
+        //        while (leftP >= 0)
+        //        {
+        //            maxLeft = Math.Max(maxLeft, heights[leftP]);
+        //            leftP--;
+        //        }
+
+        //        //determine maxRight
+        //        while (rightP < heights.Length)
+        //        {
+        //            maxRight = Math.Max(maxRight, heights[rightP]);
+        //            rightP++;
+        //        }
+
+        //        int currentWater = Math.Min(maxLeft, maxRight) - heights[p];
+        //        if (currentWater >= 0)
+        //        {
+        //            totalWater += currentWater;
+        //        }
+        //    }
+        //    return totalWater;
+        //}
 
     }
 }
